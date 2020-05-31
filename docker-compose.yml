@@ -1,0 +1,8 @@
+version: "3.8"
+
+services: 
+    api-cep:
+        build: .
+        container_name: "api-cep"
+        volumes: 
+            - .:/var/www/html

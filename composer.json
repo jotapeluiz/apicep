@@ -1,13 +1,14 @@
 {
     "name": "jotapeluiz/apicep",
-    "description": "api for integration to the site https://apicep.com/api-de-consulta/ to search for addresses through zip code",
-    "keywords": ["api", "php7", "integration", "zipcode", "search"],
+    "description": "Api for integration to the site https://apicep.com/api-de-consulta/ to search for addresses through zip code",
+    "keywords": ["api", "php7", "integration", "zipcode", "search", "address"],
     "type": "library",
     "require": {
         "guzzlehttp/guzzle": "^6.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.1"
+        "phpunit/phpunit": "^9.1",
+        "fzaninotto/faker": "^1.9"
     },
     "license": "MIT",
     "authors": [
@@ -15,5 +16,10 @@
             "name": "João Paulo Luiz Lopes",
             "email": "joaopaulo.luizlopes@outlook.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "APICEP\\": "src/"
+        }
+    }
 }

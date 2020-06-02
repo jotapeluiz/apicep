@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use APICEP\Request\ZipCodeRequest;
+use APICEP\Request\APIRequest;
 use Faker\Factory;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 
-class ZipCodeRequestTest extends TestCase
+class APIRequestTest extends TestCase
 {
     private $faker;
 
@@ -22,7 +22,7 @@ class ZipCodeRequestTest extends TestCase
         $body = $this->validAddressData();
         $request = $this->buildRequest(200, $body);
 
-        $this->assertEquals($request->search($this->faker->postcode), $body);
+        $this->assertEquals($request->get($this->faker->postcode), $body);
     }
 
     public function testShouldReturnTheDataWithAnInvalidZipCode()
@@ -30,7 +30,7 @@ class ZipCodeRequestTest extends TestCase
         $body = $this->invalidAddressData();
         $request = $this->buildRequest(200, $body);
 
-        $this->assertEquals($request->search(''), $body);
+        $this->assertEquals($request->get(''), $body);
     }
 
     public function testMustReturnDataWithANonexistentZipCode()
@@ -38,7 +38,7 @@ class ZipCodeRequestTest extends TestCase
         $body = $this->addressDataNotFound();
         $request = $this->buildRequest(200, $body);
 
-        $this->assertEquals($request->search($this->faker->phoneNumber), $body);
+        $this->assertEquals($request->get($this->faker->phoneNumber), $body);
     }
 
     public function testShouldThrowExceptionWhenAnErrorOccursInTheRequest()
@@ -47,7 +47,7 @@ class ZipCodeRequestTest extends TestCase
         $this->expectExceptionCode(500);
 
         $request = $this->buildRequest(500, []);
-        $request->search($this->faker->postcode);
+        $request->get($this->faker->postcode);
     }
 
     private function validAddressData(): array
@@ -84,11 +84,10 @@ class ZipCodeRequestTest extends TestCase
         ];
     }
 
-    private function buildRequest(int $status, array $body = null): ZipCodeRequest
+    private function buildRequest(int $status, array $body = null): APIRequest
     {        
         $mock = new MockHandler([new Response($status, [], json_encode($body))]);
-        $handler = HandlerStack::create($mock);
-        
-        return new ZipCodeRequest(new Client(['handler' => $handler]));
+            
+        return new APIRequest(new Client(['handler' => HandlerStack::create($mock)]));
     }
 }

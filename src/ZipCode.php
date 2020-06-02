@@ -2,7 +2,7 @@
 
 namespace APICEP;
 
-use APICEP\Request\ZipCodeRequest;
+use APICEP\Request\APIRequest;
 use APICEP\Constants\ZipCodeStatus;
 use APICEP\Helpers\ZipCodeHelper;
 use APICEP\Exceptions\AttributeNotFoundException;
@@ -83,13 +83,13 @@ final class ZipCode
     
     private function searchAddress(string $zipcode): void
     {        
-        $request = new ZipCodeRequest();
-        $result = $request->search($zipcode);
+        $request = new APIRequest();
+        $response = $request->get($zipcode);
 
-        $this->found = ($result['status'] === ZipCodeStatus::FOUND);
+        $this->found = ($response['status'] === ZipCodeStatus::FOUND);
 
         if ($this->found) {        
-            $this->fillAttributes($result);
+            $this->fillAttributes($response);
         }
     }
 }

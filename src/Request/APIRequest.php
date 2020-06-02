@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace APICEP\Request;
+namespace WideNet\Request;
 
 use GuzzleHttp\Client;
 
@@ -10,7 +10,7 @@ final class APIRequest
 
     public function __construct(Client $clientHttp = null)
     {
-        $this->clientHttp = $clientHttp ?? new Client(['base_uri' => 'https://ws.apicep.com/cep/']);
+        $this->clientHttp = $clientHttp ?? new Client(['base_uri' => 'https://ws.WideNet.com/cep/']);
     }
 
     public function get(string $zipcode): array

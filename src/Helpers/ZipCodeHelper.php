@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace APICEP\Helpers;
+namespace WideNet\Helpers;
 
 final class ZipCodeHelper
 {

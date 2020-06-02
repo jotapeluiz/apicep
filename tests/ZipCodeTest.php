@@ -2,10 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 use Faker\Factory;
-use APICEP\ZipCode;
-use APICEP\Exceptions\AttributeNotFoundException;
-use APICEP\Exceptions\UpdateAttributeException;
 use ReflectionClass;
+use WideNet\ZipCode;
+use WideNet\Exceptions\AttributeNotFoundException;
+use WideNet\Exceptions\UpdateAttributeException;
 
 final class ZipCodeTest extends TestCase
 {
@@ -18,10 +18,10 @@ final class ZipCodeTest extends TestCase
 
     public function testWithAnInvalidZipNumber()
     {
-        $zipcode = new ZipCode($this->faker->phoneNumber);
+        $zipCode = new ZipCode($this->faker->phoneNumber);
         
-        $this->assertTrue($zipcode->isInvalid());
-        $this->assertFalse($zipcode->wasFound());
+        $this->assertTrue($zipCode->isInvalid());
+        $this->assertFalse($zipCode->wasFound());
     }
 
     public function testWithAnValidZipNumber()
@@ -30,7 +30,7 @@ final class ZipCodeTest extends TestCase
 
         $class = new ReflectionClass(ZipCode::class);
         $instance = $class->newInstanceArgs(['zipcode' => '']);
-        
+                
         $property = $class->getProperty('attributes');
         $property->setAccessible(true);
         $property->setValue($instance, $address);
@@ -51,17 +51,17 @@ final class ZipCodeTest extends TestCase
     {                
         $this->expectException(AttributeNotFoundException::class);
         
-        $zipcode = new ZipCode('');
-        $zipcode->foo;
+        $zipCode = new ZipCode('');
+        $zipCode->foo;
     }
 
     public function testShouldGenerateExceptionWhenTryingToChangeAnAttribute()
     {                
         $this->expectException(UpdateAttributeException::class);
         
-        $zipcode = new ZipCode('');
-        $zipcode->foo = $this->faker->postcode;
-        $zipcode->code = $this->faker->postcode;
+        $zipCode = new ZipCode('');
+        $zipCode->foo = $this->faker->postcode;
+        $zipCode->code = $this->faker->postcode;
     }
 
     private function validAddress(): array

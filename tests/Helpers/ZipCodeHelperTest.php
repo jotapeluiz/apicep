@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use APICEP\Helpers\ZipCodeHelper;
+use WideNet\Helpers\ZipCodeHelper;
 
 class ZipCodeHelperTest extends TestCase
 {

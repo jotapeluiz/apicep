@@ -2,7 +2,7 @@
 
 require_once '../vendor/autoload.php';
 
-use APICEP\ZipCode;
+use WideNet\ZipCode;
 
 $code = '06233030';
 $zipcode = new ZipCode($code);

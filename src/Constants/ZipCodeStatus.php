@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace APICEP\Constants;
+namespace WideNet\Constants;
 
 final class ZipCodeStatus
 {

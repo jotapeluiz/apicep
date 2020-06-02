@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use APICEP\Request\APIRequest;
+use WideNet\Request\APIRequest;
 use Faker\Factory;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;

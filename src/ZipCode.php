@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace APICEP;
+namespace WideNet;
 
-use APICEP\Request\APIRequest;
-use APICEP\Constants\ZipCodeStatus;
-use APICEP\Helpers\ZipCodeHelper;
-use APICEP\Exceptions\AttributeNotFoundException;
-use APICEP\Exceptions\UpdateAttributeException;
+use WideNet\Request\APIRequest;
+use WideNet\Constants\ZipCodeStatus;
+use WideNet\Helpers\ZipCodeHelper;
+use WideNet\Exceptions\AttributeNotFoundException;
+use WideNet\Exceptions\UpdateAttributeException;
 
 final class ZipCode
 {

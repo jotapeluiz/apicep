@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace APICEP\Exceptions;
+namespace WideNet\Exceptions;
 
 use Exception;
 

@@ -1,4 +1,8 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+namespace WideNet\Tests\Request;
 
 use PHPUnit\Framework\TestCase;
 use WideNet\Request\APIRequest;
@@ -7,6 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Exception\RequestException;
 
 class APIRequestTest extends TestCase
 {
@@ -18,7 +23,7 @@ class APIRequestTest extends TestCase
     }
     
     public function testShouldReturnDataFromAnAddressWithAValidZipCode()
-    {        
+    {
         $body = $this->validAddressData();
         $request = $this->buildRequest(200, $body);
 
@@ -26,7 +31,7 @@ class APIRequestTest extends TestCase
     }
 
     public function testShouldReturnTheDataWithAnInvalidZipCode()
-    {        
+    {
         $body = $this->invalidAddressData();
         $request = $this->buildRequest(200, $body);
 
@@ -34,7 +39,7 @@ class APIRequestTest extends TestCase
     }
 
     public function testMustReturnDataWithANonexistentZipCode()
-    {        
+    {
         $body = $this->addressDataNotFound();
         $request = $this->buildRequest(200, $body);
 
@@ -42,8 +47,8 @@ class APIRequestTest extends TestCase
     }
 
     public function testShouldThrowExceptionWhenAnErrorOccursInTheRequest()
-    {                
-        $this->expectException(GuzzleHttp\Exception\RequestException::class);
+    {
+        $this->expectException(RequestException::class);
         $this->expectExceptionCode(500);
 
         $request = $this->buildRequest(500, []);
@@ -80,12 +85,12 @@ class APIRequestTest extends TestCase
             'status' => 400,
             'ok' => false,
             "message" => 'CEP informado é inválido',
-            "statusText" => 'bad_request'            
+            "statusText" => 'bad_request'
         ];
     }
 
     private function buildRequest(int $status, array $body = null): APIRequest
-    {        
+    {
         $mock = new MockHandler([new Response($status, [], json_encode($body))]);
             
         return new APIRequest(new Client(['handler' => HandlerStack::create($mock)]));

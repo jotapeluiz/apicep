@@ -1,4 +1,8 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+namespace WideNet\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Faker\Factory;

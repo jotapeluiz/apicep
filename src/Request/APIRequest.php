@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace WideNet\Request;
 
@@ -8,11 +10,22 @@ final class APIRequest
 {
     private $clientHttp;
 
+    /**
+     * Create an api requisition
+     *
+     * @param Client $clientHttp
+     */
     public function __construct(Client $clientHttp = null)
     {
         $this->clientHttp = $clientHttp ?? new Client(['base_uri' => 'https://ws.WideNet.com/cep/']);
     }
 
+    /**
+     * Performs the api request
+     *
+     * @param string $zipcode
+     * @return array
+     */
     public function get(string $zipcode): array
     {
         $response = $this->clientHttp->get("$zipcode.json");

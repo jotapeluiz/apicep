@@ -1,7 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace WideNet\Constants;
 
+/**
+ * Represents the return status of the API
+ */
 final class ZipCodeStatus
 {
     const FOUND = 200;

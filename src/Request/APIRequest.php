@@ -17,7 +17,7 @@ final class APIRequest
      */
     public function __construct(Client $clientHttp = null)
     {
-        $this->clientHttp = $clientHttp ?? new Client(['base_uri' => 'https://ws.WideNet.com/cep/']);
+        $this->clientHttp = $clientHttp ?? new Client(['base_uri' => 'https://ws.apicep.com/cep/']);
     }
 
     /**

@@ -1,6 +1,6 @@
 {
     "name": "jotapeluiz/apicep",
-    "description": "Api for integration to the site https://WideNet.com/api-de-consulta/ to search for addresses through zip code",
+    "description": "Api for integration to the site https://apicep.com/api-de-consulta/ to search for addresses through zip code",
     "keywords": ["api", "integration", "zipcode", "search", "address"],
     "type": "library",
     "require": {

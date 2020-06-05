@@ -14,7 +14,8 @@
     "authors": [
         {
             "name": "João Paulo Luiz Lopes",
-            "email": "joaopaulo.luizlopes@outlook.com"
+            "email": "joaopaulo.luizlopes@outlook.com",
+            "homepage": "https://github.com/jotapeluiz/apicep"            
         }
     ],
     "autoload": {

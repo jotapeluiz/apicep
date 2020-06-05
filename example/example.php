@@ -5,25 +5,25 @@ require_once '../vendor/autoload.php';
 use WideNet\ZipCode;
 
 $code = '06233030';
-$zipcode = new ZipCode($code);
+$zipCode = new ZipCode($code);
 
 echo "Procurando pelo CEP $code:\n\n";
 
-if ($zipcode->wasFound()) {
+if ($zipCode->wasFound()) {
     echo "Endereço encontrado: \n\n";
-    echo "CEP...: {$zipcode->code}\n";
-    echo "Estado: {$zipcode->state}\n";
-    echo "Cidade: {$zipcode->city}\n";
-    echo "Bairro: {$zipcode->district}\n";
-    echo "Rua...: {$zipcode->address}\n\n";
-    echo "Por extenso: $zipcode\n\n";
+    echo "CEP...: {$zipCode->code}\n";
+    echo "Estado: {$zipCode->state}\n";
+    echo "Cidade: {$zipCode->city}\n";
+    echo "Bairro: {$zipCode->district}\n";
+    echo "Rua...: {$zipCode->address}\n\n";
+    echo "Por extenso: $zipCode\n\n";
 } else {
     echo "O CEP $code não foi encontrado!\n\n";
 }
 
 $code = strval(rand(0, 9999));
-$zipcode = new ZipCode($code);
+$zipCode = new ZipCode($code);
 
-if ($zipcode->isInvalid()) {
+if ($zipCode->isInvalid()) {
     echo "O CEP $code é inválido:\n";
 }

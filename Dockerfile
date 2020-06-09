@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine3.11
+FROM php:7.4-alpine
 
 RUN apk update --no-cache
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -6,5 +6,3 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /var/www/html
 
 COPY . /var/www/html
-
-RUN composer install

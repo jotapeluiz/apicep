@@ -62,6 +62,7 @@ class APIRequestTest extends TestCase
             'ok' => true,
             'code' => $this->faker->postcode,
             'state' => $this->faker->stateAbbr,
+            'stateName' => $this->faker->state,
             'city' => $this->faker->city,
             'district' => $this->faker->state,
             'address' => $this->faker->streetName,

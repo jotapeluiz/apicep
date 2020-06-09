@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WideNet;
 
+use WideNet\BrazilStates;
 use WideNet\Request\APIRequest;
 use WideNet\Constants\ZipCodeStatus;
 use WideNet\Helpers\ZipCodeHelper;
@@ -121,7 +122,7 @@ final class ZipCode
      */
     private function initializeAttributes(): void
     {
-        $this->attributes = array_fill_keys(['code', 'state', 'city', 'district', 'address'], '');
+        $this->attributes = array_fill_keys(['code', 'state', 'stateName', 'city', 'district', 'address'], '');
     }
 
     /**
@@ -137,6 +138,9 @@ final class ZipCode
                 $this->attributes[$key] = $value;
             }
         }
+
+        $brazilState = new BrazilStates();
+        $this->attributes['stateName'] = $brazilState->name($this->state);
     }
     
     /**

@@ -29,7 +29,7 @@ final class ZipCodeTest extends TestCase
     }
 
     public function testWithAnValidZipNumber()
-    {        
+    {
         $address = $this->validAddress();
 
         $class = new ReflectionClass(ZipCode::class);
@@ -52,7 +52,7 @@ final class ZipCodeTest extends TestCase
     }
 
     public function testShouldGenerateExceptionWhenAccessingAnAttributeNotFound()
-    {                
+    {
         $this->expectException(AttributeNotFoundException::class);
         
         $zipCode = new ZipCode('');
@@ -60,7 +60,7 @@ final class ZipCodeTest extends TestCase
     }
 
     public function testShouldGenerateExceptionWhenTryingToChangeAnAttribute()
-    {                
+    {
         $this->expectException(UpdateAttributeException::class);
         
         $zipCode = new ZipCode('');
@@ -73,6 +73,7 @@ final class ZipCodeTest extends TestCase
         return [
             'code' => $this->faker->postcode,
             'state' => $this->faker->stateAbbr,
+            'stateName' => $this->faker->state,
             'city' => $this->faker->city,
             'district' => $this->faker->state,
             'address' => $this->faker->streetName

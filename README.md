@@ -17,9 +17,10 @@ use WideNet\ZipCode;
 
 $zipCode = new ZipCode('06233030');
 
-if ($zipCode->wasFound()) {
+if ($zipCode->found()) {
     echo $zipCode->code;        // CEP
     echo $zipCode->state;       // Estado (sigla)
+    echo $zipCode->stateName;   // Estado
     echo $zipCode->city;        // Cidade
     echo $zipCode->district;    // Bairro
     echo $zipCode->address;     // Rua
@@ -33,3 +34,27 @@ $zipCode->toJson();
 ```
 
 Acesse o arquivo **example/example.php** para ver mais modo de uso.
+
+## Desenvolvimento
+
+Recomendável usar [Docker](https://www.docker.com/).
+
+Buildando a imagem:
+```bash
+docker-compose build api-cep
+```
+
+Instalando as dependências:
+```bash
+docker-compose run --rm api-cep composer install
+```
+Rodando os testes:
+
+Acesse o terminal do container:
+```bash
+docker-compose run --rm api-cep sh
+```
+Execute os testes:
+```bash
+./vendor/bin/phpunit tests --testdox --colors
+```

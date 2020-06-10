@@ -9,10 +9,10 @@ $zipCode = new ZipCode($code);
 
 echo "Procurando pelo CEP $code:\n\n";
 
-if ($zipCode->wasFound()) {
+if ($zipCode->found()) {
     echo "Endereço encontrado: \n\n";
     echo "CEP...: {$zipCode->code}\n";
-    echo "Estado: {$zipCode->state}\n";
+    echo "Estado: ({$zipCode->state}) {$zipCode->stateName}\n";
     echo "Cidade: {$zipCode->city}\n";
     echo "Bairro: {$zipCode->district}\n";
     echo "Rua...: {$zipCode->address}\n\n";
@@ -24,6 +24,6 @@ if ($zipCode->wasFound()) {
 $code = strval(rand(0, 9999));
 $zipCode = new ZipCode($code);
 
-if ($zipCode->isInvalid()) {
+if ($zipCode->invalid()) {
     echo "O CEP $code é inválido:\n";
 }

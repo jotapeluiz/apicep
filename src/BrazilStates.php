@@ -8,11 +8,21 @@ final class BrazilStates
 {
     private $states;
 
+    /**
+     * Initializes states
+     */
     public function __construct()
     {
         $this->initStates();
     }
 
+    /**
+     * Returns the name of the state based on its acronym
+     *
+     * @param string $stateAbbreviation
+     * @throws WideNet\Exceptions\StateNotFoundException;
+     * @return string
+     */
     public function name(string $stateAbbreviation): string
     {
         $abbreviation = strtoupper(trim($stateAbbreviation));
@@ -24,6 +34,11 @@ final class BrazilStates
         return $this->states[$abbreviation];
     }
 
+    /**
+     * Initializes the array with the states and their acronyms
+     *
+     * @return void
+     */
     private function initStates(): void
     {
         $this->states = [

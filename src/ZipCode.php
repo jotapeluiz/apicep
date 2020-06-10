@@ -13,9 +13,7 @@ use WideNet\Exceptions\UpdateAttributeException;
 
 final class ZipCode
 {
-    private $found;
-    
-    private $valid;
+    private $status;
     
     private $attributes;
 
@@ -27,11 +25,8 @@ final class ZipCode
     public function __construct(string $zipcode)
     {
         $this->initializeAttributes();
-
-        $this->found = false;
-        $this->valid = ZipCodeHelper::isValid($zipcode);
         
-        if ($this->valid) {
+        if (ZipCodeHelper::isValid($zipcode)) {
             $this->searchAddress($zipcode);
         }
     }
@@ -41,9 +36,9 @@ final class ZipCode
      *
      * @return boolean
      */
-    public function wasFound(): bool
+    public function found(): bool
     {
-        return $this->found;
+        return $this->status === ZipCodeStatus::FOUND;
     }
 
     /**
@@ -51,9 +46,9 @@ final class ZipCode
      *
      * @return boolean
      */
-    public function isInvalid(): bool
+    public function invalid(): bool
     {
-        return !$this->valid;
+        return $this->status === ZipCodeStatus::INVALID;
     }
 
     /**
@@ -79,7 +74,7 @@ final class ZipCode
     /**
      * Returns an attribute of the found address
      *
-     * @param string $key The name of the attribute which can be: code, state, city, district or address
+     * @param string $key The name of the attribute which can be: code, state, stateName, city, district or address
      * @throws WideNet\Exceptions\AttributeNotFoundException;
      * @return string
      */
@@ -112,17 +107,18 @@ final class ZipCode
      */
     public function __toString(): string
     {
-        return "{$this->address}, {$this->district}, {$this->city} - {$this->state}, {$this->code}";
+        return "{$this->address}, {$this->district}, {$this->city} - {$this->stateName} ({$this->state}), {$this->code}";
     }
     
     /**
-     * Initializes the attributes of an address
+     * Initialization of class attributes
      *
      * @return void
      */
     private function initializeAttributes(): void
     {
-        $this->attributes = array_fill_keys(['code', 'state', 'stateName', 'city', 'district', 'address'], '');
+        $this->status = ZipCodeStatus::INVALID;
+        $this->fillAttributes(array_fill_keys(['code', 'state', 'stateName', 'city', 'district', 'address'], ''));
     }
 
     /**
@@ -133,14 +129,12 @@ final class ZipCode
      */
     private function fillAttributes(array $attributes): void
     {
-        foreach ($attributes as $key => $value) {
-            if (array_key_exists($key, $this->attributes)) {
-                $this->attributes[$key] = $value;
-            }
-        }
+        $this->attributes = $attributes;
 
-        $brazilState = new BrazilStates();
-        $this->attributes['stateName'] = $brazilState->name($this->state);
+        if (!array_key_exists('stateName', $this->attributes)) {
+            $brazilState = new BrazilStates();
+            $this->attributes['stateName'] = $brazilState->name($this->state);
+        }
     }
     
     /**
@@ -154,10 +148,11 @@ final class ZipCode
         $request = new APIRequest();
         $response = $request->get($zipcode);
 
-        $this->found = ($response['status'] === ZipCodeStatus::FOUND);
+        $this->status = $response['status'];
 
-        if ($this->found) {
-            $this->fillAttributes($response);
+        if ($this->found()) {
+            $addressFields = array_splice($response, 2, 5);
+            $this->fillAttributes($addressFields);
         }
     }
 }

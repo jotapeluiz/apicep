@@ -7,6 +7,7 @@ namespace WideNet\Tests;
 use PHPUnit\Framework\TestCase;
 use Faker\Factory;
 use ReflectionClass;
+use WideNet\Constants\ZipCodeStatus;
 use WideNet\ZipCode;
 use WideNet\Exceptions\AttributeNotFoundException;
 use WideNet\Exceptions\UpdateAttributeException;
@@ -24,8 +25,8 @@ final class ZipCodeTest extends TestCase
     {
         $zipCode = new ZipCode($this->faker->phoneNumber);
         
-        $this->assertTrue($zipCode->isInvalid());
-        $this->assertFalse($zipCode->wasFound());
+        $this->assertTrue($zipCode->invalid());
+        $this->assertFalse($zipCode->found());
     }
 
     public function testWithAnValidZipNumber()
@@ -39,13 +40,13 @@ final class ZipCodeTest extends TestCase
         $property->setAccessible(true);
         $property->setValue($instance, $address);
         
-        $property = $class->getProperty('found');
+        $property = $class->getProperty('status');
         $property->setAccessible(true);
-        $property->setValue($instance, true);
+        $property->setValue($instance, ZipCodeStatus::FOUND);
         
-        $toString = "{$instance->address}, {$instance->district}, {$instance->city} - {$instance->state}, {$instance->code}";
+        $toString = "{$instance->address}, {$instance->district}, {$instance->city} - {$instance->stateName} ({$instance->state}), {$instance->code}";
 
-        $this->assertTrue($class->getMethod('wasFound')->invoke($instance));
+        $this->assertTrue($class->getMethod('found')->invoke($instance));
         $this->assertEquals($address, $class->getMethod('toArray')->invoke($instance));
         $this->assertEquals(json_encode($address), $class->getMethod('toJson')->invoke($instance));
         $this->assertEquals($toString, $class->getMethod('__toString')->invoke($instance));

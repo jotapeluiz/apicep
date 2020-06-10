@@ -7,12 +7,14 @@ namespace WideNet;
 use WideNet\BrazilStates;
 use WideNet\Request\APIRequest;
 use WideNet\Constants\ZipCodeStatus;
-use WideNet\Helpers\ZipCodeHelper;
+use WideNet\Traits\ValidateZipCodeTrait;
 use WideNet\Exceptions\AttributeNotFoundException;
 use WideNet\Exceptions\UpdateAttributeException;
 
 final class ZipCode
 {
+    use ValidateZipCodeTrait;
+
     private $status;
     
     private $attributes;
@@ -22,12 +24,12 @@ final class ZipCode
      *
      * @param string $zipcode the code to be searched
      */
-    public function __construct(string $zipcode)
+    public function __construct(string $zipCode)
     {
         $this->initializeAttributes();
         
-        if (ZipCodeHelper::isValid($zipcode)) {
-            $this->searchAddress($zipcode);
+        if ($this->zipCodeValid($zipCode)) {
+            $this->searchAddress($zipCode);
         }
     }
     
